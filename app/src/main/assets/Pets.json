@@ -1,0 +1,23 @@
+[
+  {
+    "name": "John Denver",
+    "age": 11,
+    "type": "cat",
+    "color": "#FF0044",
+    "imageUrl": "https://unsplash.com/photos/IbPxGLgJiMI"
+  },
+  {
+    "name": "John Denver 2",
+    "age": 11,
+    "type": "cat",
+    "color": "#FF0044",
+    "imageUrl": "https://unsplash.com/photos/IbPxGLgJiMI"
+  },
+  {
+    "name": "John Denver 3",
+    "age": 11,
+    "type": "cat",
+    "color": "#FF0044",
+    "imageUrl": "https://unsplash.com/photos/IbPxGLgJiMI"
+  }
+]

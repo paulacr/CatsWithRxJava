@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Fluffy Cats :)</string>
+    <string name="transition_screen">screen_transition</string>
+</resources>
