@@ -22,41 +22,29 @@ class CatDashboardViewModel(app: Application, private val repository: CatDashboa
 
     fun getCats() {
 
-        lateinit var category: Category
         catsDisposable?.dispose()
         catsDisposable =
 
             repository.getCachedCategories()
-                .doOnNext {
-                    category = it.first()
-                }.flatMap {
-                    repository.getCatImage("100")
-                }.flatMap {
-                    Observable.fromIterable(it)
-                }.filter {
-                    !it.categories.isNullOrEmpty()
-                }.filter {
-                    it.categories.contains(category)
+                .map { categoriesList: List<Category> ->
+                    categoriesList.first()
+                }.flatMap { category: Category ->
+                    repository.getCatImages("100", category)
+                }.flatMap { catsImageList: List<CatImage> ->
+                    Observable.fromIterable(catsImageList)
+                }.filter { catImage: CatImage ->
+                    !catImage.categories.isNullOrEmpty()
                 }.toList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    if (it.isNotEmpty()) {
-                        onDataReady.actionOccuredPost(it)
-                        Log.i("Log Category ", "$it")
+                .subscribe({ result: MutableList<CatImage> ->
+                    if (result.isNotEmpty()) {
+                        onDataReady.actionOccuredPost(result)
+                        Log.i("Log Category ", "$result")
                     }
                 }, { error ->
                     Log.e("Error", "error", error)
                 })
-//            repository.getCatImage(LIMIT_ITEMS)
-//                .flatMap {
-//                    repository.getCatDetail(it.first().id)
-//                }
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe {
-//                    onDataReady.actionOccuredPost(listOf(it))
-//                }
         catsDisposable?.let {
             compositeDisposable.add(it)
         }

@@ -16,7 +16,7 @@ class CatDashboardRepository(private val apiInterface: ApiInterface) : CatDataSo
         return apiInterface.getCategories()
     }
 
-    override fun getCatImage(limit: String?): Observable<List<CatImage>> {
-        return apiInterface.searchCats(limit)
+    override fun getCatImages(limit: String?, categoryId: Category?): Observable<List<CatImage>> {
+        return apiInterface.searchCats(limit, categoryId?.id)
     }
 }

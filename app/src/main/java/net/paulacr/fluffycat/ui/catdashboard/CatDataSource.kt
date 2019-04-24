@@ -6,7 +6,7 @@ import net.paulacr.fluffycat.model.Category
 
 interface CatDataSource {
 
-    fun getCatImage(limit: String? = null): Observable<List<CatImage>>
+    fun getCatImages(limit: String? = null, categoryId: Category? = null): Observable<List<CatImage>>
 
     fun getCategories(): Observable<List<Category>>
 

@@ -28,7 +28,7 @@ class FluffyCatActivityViewModel(app: Application, private val repository: CatDa
     fun getFluffy() {
         catsDisposable?.dispose()
         catsDisposable =
-            repository.getCatImage()
+            repository.getCatImages()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map {

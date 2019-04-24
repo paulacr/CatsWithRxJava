@@ -217,6 +217,7 @@ class HomeActivityViewModel(app: Application) : AndroidViewModel(app) {
                         return t < 3
                     }
                 })
+
         observableTake.subscribe(object : Observer<Int> {
 
             override fun onComplete() {
@@ -226,16 +227,19 @@ class HomeActivityViewModel(app: Application) : AndroidViewModel(app) {
             }
 
             override fun onNext(t: Int) {
-                Log.i("Log take and filter", "Result = $t")
+                Log.i("Log with Error", "onNext Result = $t")
             }
 
             override fun onError(e: Throwable) {
+                Log.i("Log with Error", "onError Result = $e")
             }
         })
     }
 
+    private var disposable: Disposable? = null
+
     private fun subscribeOnDemo() {
-        Observable.just("Hello:")
+        val observable = Observable.just("Hello:")
             .subscribeOn(Schedulers.computation())
             .doOnNext {
                 Log.i("Log thread", Thread.currentThread().name)
@@ -255,8 +259,14 @@ class HomeActivityViewModel(app: Application) : AndroidViewModel(app) {
             .concatMap {
                 Observable.just(it + " RxJava is awesome")
             }
-            .subscribe {
-                Log.i("Log thread", "Result $it")
+
+        disposable = observable.subscribe {
+                Log.i("Log thread", "Result $it thread: ${Thread.currentThread().name}")
             }
+    }
+
+    override fun onCleared() {
+        disposable?.dispose()
+        super.onCleared()
     }
 }

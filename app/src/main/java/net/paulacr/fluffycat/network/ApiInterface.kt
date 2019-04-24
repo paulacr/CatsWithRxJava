@@ -9,7 +9,7 @@ import retrofit2.http.Query
 interface ApiInterface {
 
     @GET("images/search")
-    fun searchCats(@Query("limit") limit: String?): Observable<List<CatImage>>
+    fun searchCats(@Query("limit") limit: String?, @Query("category_ids") categoryId: String?): Observable<List<CatImage>>
 
     @GET("categories")
     fun getCategories(): Observable<List<Category>>
